@@ -4,3 +4,5 @@ out/
 .sites-runtime/
 *.tsbuildinfo
 .env*
+
+.DS_Store

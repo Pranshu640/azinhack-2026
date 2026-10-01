@@ -1,0 +1,11 @@
+Use case: stylized-concept
+Asset type: transparent hero artwork for the AZINHACK 2026 hackathon website, displayed about 700px wide center-right below oversized black typography.
+Primary request: an original sculptural human hand rising from the bottom edge, fingers gently reaching upward around a luminous geometric four-point star.
+Scene/backdrop: genuinely transparent background, isolated cutout with alpha transparency.
+Subject: one anatomically convincing human hand with five fingers, palm facing partly toward viewer, fingers in an elegant relaxed upward-reaching pose; a single sharply geometric four-point star floating just above the fingers.
+Style/medium: black and white vintage photocopy / risograph halftone engraving, coarse ordered dither dot texture, editorial experimental design.
+Composition/framing: square 1024x1024 composition; the complete hand fully visible except wrist exiting at the lower edge; generous empty transparent space surrounding the hand and star. Main subject centered in the square, hand occupying lower two-thirds and star above fingertips.
+Color palette: monochrome black and white hand, slight electric cobalt blue tint concentrated on the luminous star.
+Materials/textures: tactile grain, coarse halftone dots and engraved shadows, crisp cutout silhouette.
+Constraints: exactly one hand and one four-point star; actual alpha transparency; preserve the natural hand anatomy; no background fill or fake checkerboard.
+Avoid: text, logos, lettering, borders, interface elements, posters, extra objects, extra fingers, watermark.

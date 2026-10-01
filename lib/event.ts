@@ -1,8 +1,8 @@
-// Organizer-confirmed facts. Replace null only when the official application URL is supplied.
+// Organizer-confirmed facts and official participant links.
 export const event = {
   name: "AZINHACK ’26",
   dates: '21–22 October 2026',
-  registrationUrl: null as string | null,
+  registrationUrl: 'https://unstop.com/p/azinhack-2026-guru-gobind-singh-indraprastha-university-ggsipu-delhi-1763832',
   venue: 'GGSIPU USAR · East Delhi Campus',
   address: 'Surajmal Vihar, Delhi — 110092',
   prizePool: '₹1,00,000',
@@ -28,7 +28,7 @@ export const faqs = [
   { q: 'When and where is AZINHACK?', a: '21–22 October 2026 at GGSIPU USAR, East Delhi Campus, Surajmal Vihar, Delhi. Final reporting times and room details will be announced by the organizers.' },
   { q: 'What can we build?', a: 'AZINHACK has one Open Innovation track. Choose a problem you care about and build a useful prototype. Final competition rules will be published by the organizers.' },
   { q: 'Is TinyFish integration required?', a: 'Yes. Every project must integrate TinyFish. Make its role clear in your project and demonstration. Use the TinyFish sign-up link on this page to create your account and prepare your integration.' },
-  { q: 'How do I register?', a: 'The official registration link will be announced soon. You can save the event dates to your calendar while the application details are being finalized.' },
+  { q: 'How do I register?', a: 'Visit the official AZINHACK ’26 event page on Unstop and follow the registration instructions there.', link: event.registrationUrl, linkLabel: 'Register on Unstop' },
   { q: 'What is the team size?', a: 'Team size, eligibility, and participation requirements will be announced with the official registration details.' },
   { q: 'How will the prizes be distributed?', a: 'The total prize pool is ₹1,00,000. The final prize allocation and judging criteria will be announced by the organizers.' },
 ];
