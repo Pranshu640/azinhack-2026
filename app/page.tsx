@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
-import { event, faqs, gallery, inspirations, journey } from '@/lib/event';
+import { event, faqs, gallery, journey } from '@/lib/event';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,7 +22,6 @@ export default function Home() {
   const lenis = useRef<Lenis | null>(null);
   const registrationDialog = useRef<HTMLDialogElement>(null);
   const galleryDialog = useRef<HTMLDialogElement>(null);
-  const [activeIdea, setActiveIdea] = useState(0);
   const [photo, setPhoto] = useState<number | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [chapter, setChapter] = useState('01');
@@ -69,7 +68,7 @@ export default function Home() {
             .to('.prize-stamp', { rotate: -20, ease: 'power1.inOut', duration: 1 }, 0);
           gsap.timeline({ scrollTrigger: pin('challenge', '+=45%') })
             .from('.challenge-heading', { y: 50, opacity: 0.2, ease: 'power2.out' })
-            .from('.idea-tabs, .idea-panel', { y: 40, opacity: 0, stagger: 0.15, ease: 'power2.out' }, 0.15);
+            .from('.track-steps, .integration-card', { y: 35, opacity: 0, stagger: 0.15, ease: 'power2.out' }, 0.15);
           gsap.timeline({ scrollTrigger: pin('journey', '+=90%') })
             .from('.journey-card', { x: 50, opacity: 0.1, stagger: 0.35, duration: 0.5, ease: 'power2.out' })
             .to('.journey-number', { rotate: -8, scale: 0.94, ease: 'power1.inOut', duration: 1.3 }, 0);
@@ -120,7 +119,7 @@ export default function Home() {
       <header className="header">
         <button className="brand" onClick={() => navigate('home')} aria-label="AZINHACK home"><PixelStar /><span className="brand-word">AZIN<span className="brand-hack">HACK</span><span className="brand-year">’26</span></span></button>
         <nav id="mobile-nav" className={menuOpen ? 'nav is-open' : 'nav'} aria-label="Main navigation">
-          {['About', 'Challenge', 'Journey', 'Sponsors', 'Gallery'].map(item => <a key={item} href={`#${item.toLowerCase()}`} onClick={e => { e.preventDefault(); navigate(item.toLowerCase()); }}>{item}</a>)}
+          {[{ label: 'About', id: 'about' }, { label: 'Track', id: 'challenge' }, { label: 'Journey', id: 'journey' }, { label: 'Sponsors', id: 'sponsors' }, { label: 'Gallery', id: 'gallery' }].map(item => <a key={item.id} href={`#${item.id}`} onClick={e => { e.preventDefault(); navigate(item.id); }}>{item.label}</a>)}
         </nav>
         <button className="header-cta" onClick={openRegistration}>{event.registrationUrl ? 'Register now' : 'Join the build'}<span className="button-pixel" aria-hidden="true">✳</span></button>
         <button className="menu-toggle" aria-expanded={menuOpen} aria-controls="mobile-nav" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}>{menuOpen ? '−' : '+'}</button>
@@ -134,7 +133,7 @@ export default function Home() {
         <div className="hero-art-wrap"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><Image className="hero-art" src="/art/hand-star.webp" alt="A halftone hand reaching toward an electric-blue star." width={1254} height={1254} priority /><span className="art-coordinate mono">FIG. 01 — THE SPARK</span></div>
         <div className="hero-date"><span className="mono">SAVE THE DATE</span><strong>21—22</strong><span className="date-month">OCTOBER 2026</span><a href="/azinhack-26.ics" download className="text-link">Add to calendar <span aria-hidden="true">+</span></a></div>
         <div className="hero-sticker"><span>24 HOURS</span><PixelStar /><span>MAKE IT REAL</span></div>
-        <div className="hero-bottom mono"><span>GGSIPU USAR<br />EAST DELHI CAMPUS</span><button onClick={() => navigate('about')} className="scroll-cue"><span className="scroll-mouse" />SCROLL TO EXPLORE</button><span>OPEN INNOVATION<br />POWERED BY <span className="tinyfish-reference">TINYFISH</span></span></div>
+        <div className="hero-bottom mono"><span>GGSIPU USAR<br />EAST DELHI CAMPUS</span><button onClick={() => navigate('about')} className="scroll-cue"><span className="scroll-mouse" />SCROLL TO EXPLORE</button><span>OPEN INNOVATION<br />POWERED BY <a className="tinyfish-reference" href={event.tinyfishUrl} target="_blank" rel="noopener noreferrer">TINYFISH ↗</a></span></div>
       </section>
 
       <div className="ticker" aria-hidden="true"><div className="ticker-track"><span>THINK BIG</span><PixelStar /><span>BUILD SOMETHING REAL</span><PixelStar /><span>BREAK THE ORDINARY</span><PixelStar /><span>THINK BIG</span><PixelStar /><span>BUILD SOMETHING REAL</span><PixelStar /><span>BREAK THE ORDINARY</span><PixelStar /></div></div>
@@ -148,14 +147,34 @@ export default function Home() {
 
       <section className="prizes scene dot-grid" id="prizes" data-chapter="03">
         <SectionLabel number="02">BIG IDEAS. REAL REWARDS.</SectionLabel>
-        <div className="prize-top"><h2>Make it count.</h2><span className="mono">TOTAL PRIZE POOL</span></div>
+        <div className="prize-top"><h2>Total prize pool.</h2><span className="mono">₹1 LAKH IN TOTAL</span></div>
         <div className="prize-amount" role="img" aria-label="Total prize pool: 1 lakh rupees" data-reveal><span className="rupee" aria-hidden="true">₹</span>{'1,00,000'.split('').map((digit, i) => <span className="prize-digit" aria-hidden="true" key={i}>{digit}</span>)}</div>
-        <div className="prize-bottom"><div><h3>For the ideas that go somewhere.</h3><p>Build with purpose. Show what works.<br />Final prize distribution to be announced.</p></div><div className="prize-stamp"><PixelStar /><span className="mono">BUILT WITH<br />POSSIBILITY</span></div><span className="prize-code mono">REWARD_PROTOCOL<br />AZINHACK_2026</span></div>
+        <div className="prize-bottom"><div><h3>₹1,00,000 in total prizes.</h3><p>This is the total prize pool for AZINHACK ’26.<br />Final prize distribution will be announced.</p></div><div className="prize-stamp"><PixelStar /><span className="mono">BUILT WITH<br />POSSIBILITY</span></div><span className="prize-code mono">REWARD_PROTOCOL<br />AZINHACK_2026</span></div>
       </section>
 
-      <section className="challenge scene" id="challenge" data-chapter="04">
-        <SectionLabel number="03">THE BUILD BRIEF</SectionLabel>
-        <div className="challenge-layout"><div className="challenge-heading" data-reveal><span className="tag">OPEN INNOVATION</span><h2>ONE TRACK.<br />EVERY<br /><i>POSSIBILITY.</i></h2><p>The problem is yours to choose.<br />The next step is yours to build.</p><div className="challenge-requirement mono"><PixelStar /><span>EVERY PROJECT<br />INTEGRATES <span className="tinyfish-reference">TINYFISH</span></span></div></div><div className="idea-explorer" data-reveal><p className="eyebrow">A FEW PLACES TO START</p><div className="idea-tabs" role="tablist" aria-label="Open Innovation inspiration">{inspirations.map((idea, i) => <button key={idea.code} id={`idea-tab-${i}`} role="tab" aria-selected={i === activeIdea} aria-controls="idea-panel" tabIndex={i === activeIdea ? 0 : -1} onClick={() => setActiveIdea(i)} onKeyDown={e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); const next = (i + (e.key === 'ArrowRight' ? 1 : -1) + inspirations.length) % inspirations.length; setActiveIdea(next); document.getElementById(`idea-tab-${next}`)?.focus(); } }}><span>{idea.code}</span>{idea.name}</button>)}</div><div className="idea-panel" id="idea-panel" role="tabpanel" aria-labelledby={`idea-tab-${activeIdea}`} key={activeIdea}><div className="idea-graphic"><PixelStar /><span className="mono">POSSIBILITY_{inspirations[activeIdea].code}</span></div><h3>{inspirations[activeIdea].title}</h3><p>{inspirations[activeIdea].text}</p><div className="idea-example">{inspirations[activeIdea].idea}</div></div><p className="idea-note mono">INSPIRATION, NOT SEPARATE COMPETITION TRACKS.</p></div></div>
+      <section className="challenge scene" id="challenge" data-chapter="04" aria-labelledby="track-title">
+        <SectionLabel number="03">TRACK & REQUIREMENTS</SectionLabel>
+        <div className="challenge-layout">
+          <div className="challenge-heading" data-reveal>
+            <span className="tag">ONE TRACK · ANY DOMAIN</span>
+            <h2 id="track-title">OPEN<br /><i>INNOVATION.</i></h2>
+            <p>Choose any real-world problem and build a useful prototype. Every team competes in the same Open Innovation track.</p>
+            <ol className="track-steps">
+              <li><span className="mono">01</span><span>Pick a problem you want to solve.</span></li>
+              <li><span className="mono">02</span><span>Build your solution with TinyFish.</span></li>
+              <li><span className="mono">03</span><span>Demo your prototype and its TinyFish integration.</span></li>
+            </ol>
+            <p className="track-examples">Need an idea? Try a scholarship finder, a recycling resource finder, or a research assistant. These are examples within the same track.</p>
+          </div>
+          <div className="integration-card" data-reveal>
+            <div className="integration-banner mono"><PixelStar /><span>REQUIRED FOR EVERY PROJECT</span></div>
+            <Image className="integration-logo" src="/sponsors/tinyfish.svg" alt="TinyFish" width={731} height={166} />
+            <h3>TinyFish integration<br />is mandatory.</h3>
+            <p>Your prototype must use TinyFish to interact with the live web. Show what it does and how it helps solve your chosen problem in your demo.</p>
+            <a className="button button-orange" href={event.tinyfishUrl} target="_blank" rel="noopener noreferrer">Create your TinyFish account<PixelStar /></a>
+            <span className="integration-note mono">START HERE. BUILD IT INTO YOUR IDEA.</span>
+          </div>
+        </div>
       </section>
 
       <section className="journey scene" id="journey" data-chapter="05">
@@ -167,10 +186,10 @@ export default function Home() {
         <SectionLabel number="05">OUR SPONSORS</SectionLabel>
         <div className="sponsors-heading"><h2 id="sponsors-title">BACKING THE<br /><i>NEXT BIG THING.</i></h2><p className="mono">THE PEOPLE HELPING<br />POSSIBILITY TAKE SHAPE.</p></div>
         <div className="sponsor-grid">
-          <a className="sponsor-card sponsor-title" href="#tinyfish" onClick={e => { e.preventDefault(); navigate('tinyfish'); }} aria-label="TinyFish, title sponsor. Explore the build resources.">
+          <a className="sponsor-card sponsor-title" href={event.tinyfishUrl} target="_blank" rel="noopener noreferrer" aria-label="TinyFish, title sponsor. Create your TinyFish account.">
             <div className="sponsor-tier"><span>TITLE SPONSOR</span><PixelStar /></div>
             <div className="sponsor-logo"><Image src="/sponsors/tinyfish.svg" alt="TinyFish" width={731} height={166} /></div>
-            <div className="sponsor-card-bottom"><span>MEET THE TITLE SPONSOR</span><span aria-hidden="true">↘</span></div>
+            <div className="sponsor-card-bottom"><span>GET STARTED WITH TINYFISH</span><span aria-hidden="true">↗</span></div>
           </a>
           <a className="sponsor-card" href="https://www.docker.com/" target="_blank" rel="noopener noreferrer" aria-label="Docker, sponsor. Visit Docker's website.">
             <div className="sponsor-tier"><span>SPONSOR</span><PixelStar /></div>
@@ -182,19 +201,19 @@ export default function Home() {
 
       <section className="tinyfish" id="tinyfish" data-chapter="06">
         <SectionLabel number="06">BUILD WITH TINYFISH</SectionLabel>
-        <div className="fish-layout"><div className="fish-copy"><span className="fish-brand"><Image src="/sponsors/tinyfish.svg" alt="TinyFish" width={731} height={166} /></span><h2>A BIG IDEA.<br />A <i>TINY FISH.</i></h2><p>Give your idea a connection to the live web. Discover information, read pages, or automate a useful website workflow.</p><p className="fish-requirement">Every AZINHACK project must integrate TinyFish.</p><a className="button button-dark" href="https://docs.tinyfish.ai/quick-start" target="_blank" rel="noopener noreferrer">Explore the quick start<PixelStar /></a></div><div className="terminal"><div className="terminal-bar mono"><span><i /><i /><i /></span><span>IDEA_TO_REALITY.ts</span><span>+</span></div><div className="terminal-body"><p className="terminal-comment">// good ideas need real-world input</p><p><span className="code-blue">const</span> problem = <span className="code-orange">"something that matters"</span>;</p><p><span className="code-blue">const</span> possibility = <span className="code-orange">"the live web"</span>;</p><p className="terminal-spacer"><span className="code-blue">build</span>({'{'}<br />&nbsp; yourIdea,<br />&nbsp; <span className="code-orange">tinyfish</span><br />{'}'});</p><p className="terminal-comment">// make something worth showing<span className="terminal-cursor">▋</span></p></div><div className="terminal-resources mono"><a href="https://docs.tinyfish.ai/" target="_blank" rel="noopener noreferrer">DOCUMENTATION</a><a href="https://github.com/tinyfish-io/tinyfish-cookbook" target="_blank" rel="noopener noreferrer">COOKBOOK</a></div></div></div>
+        <div className="fish-layout"><div className="fish-copy"><a className="fish-brand" href={event.tinyfishUrl} target="_blank" rel="noopener noreferrer" aria-label="Create your TinyFish account"><Image src="/sponsors/tinyfish.svg" alt="TinyFish" width={731} height={166} /></a><h2>A BIG IDEA.<br />A <i>TINY FISH.</i></h2><p>Give your idea a connection to the live web. Discover information, read pages, or automate a useful website workflow.</p><p className="fish-requirement">Every AZINHACK project must integrate TinyFish.</p><a className="button button-dark" href={event.tinyfishUrl} target="_blank" rel="noopener noreferrer">Get started with TinyFish<PixelStar /></a></div><div className="terminal"><div className="terminal-bar mono"><span><i /><i /><i /></span><span>IDEA_TO_REALITY.ts</span><span>+</span></div><div className="terminal-body"><p className="terminal-comment">// good ideas need real-world input</p><p><span className="code-blue">const</span> problem = <span className="code-white">"something that matters"</span>;</p><p><span className="code-blue">const</span> possibility = <span className="code-white">"the live web"</span>;</p><p className="terminal-spacer"><span className="code-blue">build</span>({'{'}<br />&nbsp; yourIdea,<br />&nbsp; <span className="code-white">tinyfish</span><br />{'}'});</p><p className="terminal-comment">// make something worth showing<span className="terminal-cursor">▋</span></p></div><div className="terminal-resources mono"><a href="https://docs.tinyfish.ai/" target="_blank" rel="noopener noreferrer">DOCUMENTATION</a><a href={event.tinyfishUrl} target="_blank" rel="noopener noreferrer">CREATE AN ACCOUNT ↗</a></div></div></div>
       </section>
 
-      <section className="gallery-section scene" id="gallery" data-chapter="07">
-        <SectionLabel number="07">FROM THE COMMUNITY</SectionLabel>
+      <section className="faq-section" id="faq" data-chapter="07"><SectionLabel number="07">BEFORE YOU BUILD</SectionLabel><div className="faq-layout"><div><h2>GOOD<br /><i>QUESTIONS.</i></h2><p>A few things to know<br />before the first line of code.</p></div><div className="faq-list">{faqs.map((item, i) => <details key={item.q} onToggle={() => ScrollTrigger.refresh()}><summary><span className="faq-index mono">0{i + 1}</span><span>{item.q}</span><span className="faq-plus" aria-hidden="true">+</span></summary><p>{item.a}</p></details>)}</div></div></section>
+
+      <section className="gallery-section scene" id="gallery" data-chapter="08">
+        <SectionLabel number="08">FROM THE COMMUNITY</SectionLabel>
         <div className="gallery-heading"><h2>GOOD PEOPLE.<br /><i>GREAT POSSIBILITIES.</i></h2><span className="mono">THE COMMUNITY ARCHIVE<br />SCROLL. EXPLORE. REMEMBER.</span></div>
         <div className="gallery-window" data-lenis-prevent><div className="gallery-track">{gallery.map((item, i) => <button className="photo-card" key={item.src} onClick={() => setPhoto(i)} aria-label={`Open photo ${i + 1}: ${item.alt}`}><div className="photo-image"><Image src={item.src} alt={item.alt} width={1600} height={1200} sizes="(max-width: 700px) 85vw, 48vw" /><span className="photo-expand" aria-hidden="true">+</span></div><div className="photo-caption"><span className="mono">FRAME_0{i + 1}</span><span>{item.caption}</span></div></button>)}</div></div>
         <div className="gallery-bottom mono"><span>THE PEOPLE BEHIND THE POSSIBILITY.</span><span>CLICK A FRAME TO TAKE A CLOSER LOOK</span></div>
       </section>
 
-      <section className="faq-section" id="faq" data-chapter="08"><SectionLabel number="08">BEFORE YOU BUILD</SectionLabel><div className="faq-layout"><div><h2>GOOD<br /><i>QUESTIONS.</i></h2><p>A few things to know<br />before the first line of code.</p></div><div className="faq-list">{faqs.map((item, i) => <details key={item.q}><summary><span className="faq-index mono">0{i + 1}</span><span>{item.q}</span><span className="faq-plus" aria-hidden="true">+</span></summary><p>{item.a}</p></details>)}</div></div></section>
-
-      <footer><div className="footer-top"><div><span className="mono">21–22 OCTOBER · GGSIPU USAR</span><h2>GOT A <i>WHAT IF?</i><br />LET’S BUILD IT.</h2></div><button className="button button-orange" onClick={openRegistration}>{event.registrationUrl ? 'Register now' : 'Join the build'}<PixelStar /></button></div><div className="footer-word" aria-hidden="true">AZIN<span className="footer-hack">HACK</span><span>’26</span></div><div className="footer-bottom mono"><span>ORGANIZED BY IoSC<br />INTEL oneAPI STUDENT CLUB · GGSIPU EDC</span><a href="/azinhack-26.ics" download>SAVE THE DATE</a><button className="motion-control" aria-pressed={motionPaused} onClick={() => setMotionPaused(!motionPaused)}>{motionPaused ? 'ENABLE MOTION' : 'PAUSE MOTION'}</button><button onClick={() => navigate('home')}>BACK TO TOP +</button></div></footer>
+      <footer><div className="footer-top"><div><span className="mono">21–22 OCTOBER · GGSIPU USAR</span><h2>GOT A <i>WHAT IF?</i><br />LET’S BUILD IT.</h2></div><button className="button button-white" onClick={openRegistration}>{event.registrationUrl ? 'Register now' : 'Join the build'}<PixelStar /></button></div><div className="footer-word" aria-label="AZINHACK ’26"><span className="footer-name">AZIN<span className="footer-hack">HACK</span></span><span className="footer-year">’26</span></div><div className="footer-bottom mono"><span>ORGANIZED BY IoSC<br />INTEL oneAPI STUDENT CLUB · GGSIPU EDC</span><a href="/azinhack-26.ics" download>SAVE THE DATE</a><button className="motion-control" aria-pressed={motionPaused} onClick={() => setMotionPaused(!motionPaused)}>{motionPaused ? 'ENABLE MOTION' : 'PAUSE MOTION'}</button><button onClick={() => navigate('home')}>BACK TO TOP +</button></div></footer>
       <div className="chapter-indicator mono" aria-hidden="true"><span>{chapter}</span><span>/ 08</span></div>
 
       <dialog ref={registrationDialog} className="registration-dialog" aria-label="AZINHACK registration details" onClose={() => lenis.current?.start()} onClick={e => { if (e.target === e.currentTarget) registrationDialog.current?.close(); }}><button className="dialog-close" aria-label="Close registration details" onClick={() => registrationDialog.current?.close()}>×</button><PixelStar /><span className="eyebrow">YOU’RE EARLY. WE LIKE THAT.</span><h2>Your next build<br />is almost here.</h2><p>Registration details for AZINHACK ’26 will be announced soon. Save the date and explore the build brief while we get things ready.</p><div className="dialog-event"><strong>21–22 October 2026</strong><span>{event.venue}</span></div><a href="/azinhack-26.ics" download className="button button-blue">Save the date<PixelStar /></a><button className="text-link" onClick={() => { registrationDialog.current?.close(); lenis.current?.start(); navigate('challenge'); }}>Explore the challenge +</button></dialog>
